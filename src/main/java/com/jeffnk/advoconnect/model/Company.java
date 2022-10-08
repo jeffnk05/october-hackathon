@@ -3,13 +3,14 @@ package com.jeffnk.advoconnect.model;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "company")
+@Entity
+@Table(name = "company")
 public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "company_id")
-    private long companyId;
+    @Column(name = "id")
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -29,11 +30,11 @@ public class Company {
     public Company() {
     }
 
-    @OneToMany(mappedBy = "advocate")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private Set<Advocate> advocates;
 
-    public long getCompanyId() {
-        return companyId;
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -58,5 +59,13 @@ public class Company {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public Set<Advocate> getAdvocates() {
+        return advocates;
+    }
+
+    public void setAdvocates(Set<Advocate> advocates) {
+        this.advocates = advocates;
     }
 }
