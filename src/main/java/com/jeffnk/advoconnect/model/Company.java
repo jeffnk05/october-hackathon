@@ -1,14 +1,15 @@
 package com.jeffnk.advoconnect.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "company")
 public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @Column(name = "company_id")
+    private long companyId;
 
     @Column(name = "name")
     private String name;
@@ -28,8 +29,11 @@ public class Company {
     public Company() {
     }
 
-    public long getId() {
-        return id;
+    @OneToMany(mappedBy = "advocate")
+    private Set<Advocate> advocates;
+
+    public long getCompanyId() {
+        return companyId;
     }
 
     public String getName() {

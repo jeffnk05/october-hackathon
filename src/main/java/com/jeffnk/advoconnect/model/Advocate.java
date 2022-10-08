@@ -3,12 +3,12 @@ package com.jeffnk.advoconnect.model;
 import javax.persistence.*;
 
 @Entity()
-@Table(name = "advocates")
+@Table(name = "advocate")
 public class Advocate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @Column(name = "advocate_id")
+    private long advocateId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -38,11 +38,14 @@ public class Advocate {
         this.yearsOfExperience = yearsOfExperience;
     }
 
-    public Advocate() {
+    public Advocate() {}
 
-    }
-    public long getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    public long getAdvocateId() {
+        return advocateId;
     }
 
     public String getFirstName() {
