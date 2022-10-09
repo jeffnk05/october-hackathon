@@ -1,8 +1,6 @@
 package com.jeffnk.advoconnect.model;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
 
 @Entity()
 @Table(name = "advocate")
@@ -31,13 +29,17 @@ public class Advocate {
     @Column(name = "years_of_experience")
     private float yearsOfExperience;
 
-    public Advocate(String firstName, String lastName, byte[] profilePicture, String shortBio, String longBio, float yearsOfExperience) {
+    @Embedded
+    private Links links;
+
+    public Advocate(String firstName, String lastName, byte[] profilePicture, String shortBio, String longBio, float yearsOfExperience, Links links) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePicture = profilePicture;
         this.shortBio = shortBio;
         this.longBio = longBio;
         this.yearsOfExperience = yearsOfExperience;
+        this.links = links;
     }
 
     public Advocate() {}
@@ -98,4 +100,19 @@ public class Advocate {
         this.yearsOfExperience = yearsOfExperience;
     }
 
+    public Links getLinks() {
+        return links;
+    }
+
+    public void setLinks(Links links) {
+        this.links = links;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 }
