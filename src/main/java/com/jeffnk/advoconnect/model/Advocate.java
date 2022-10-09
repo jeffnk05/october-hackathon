@@ -31,19 +31,13 @@ public class Advocate {
     @Column(name = "years_of_experience")
     private float yearsOfExperience;
 
-    @ElementCollection
-    @CollectionTable(name = "advocate_links", joinColumns = @JoinColumn(name = "advocate_id"))
-    @Column(name = "links")
-    private Map<String, String> links = new HashMap<>();
-
-    public Advocate(String firstName, String lastName, byte[] profilePicture, String shortBio, String longBio, float yearsOfExperience, Map<String, String> links) {
+    public Advocate(String firstName, String lastName, byte[] profilePicture, String shortBio, String longBio, float yearsOfExperience) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePicture = profilePicture;
         this.shortBio = shortBio;
         this.longBio = longBio;
         this.yearsOfExperience = yearsOfExperience;
-        this.links = links;
     }
 
     public Advocate() {}
@@ -104,11 +98,4 @@ public class Advocate {
         this.yearsOfExperience = yearsOfExperience;
     }
 
-    public Map<String, String> getLinks() {
-        return links;
-    }
-
-    public void setLinks(Map<String, String> links) {
-        this.links = links;
-    }
 }
