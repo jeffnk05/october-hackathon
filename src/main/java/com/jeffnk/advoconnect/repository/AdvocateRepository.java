@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdvocateRepository extends CrudRepository<Advocate, Long> {
+    public Advocate findAdvocateById(long id);
 }

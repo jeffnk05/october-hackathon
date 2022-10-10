@@ -1,5 +1,7 @@
 package com.jeffnk.advoconnect.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity()
@@ -27,12 +29,12 @@ public class Advocate {
     private String longBio;
 
     @Column(name = "years_of_experience")
-    private float yearsOfExperience;
+    private int yearsOfExperience;
 
     @Embedded
     private Links links;
 
-    public Advocate(String firstName, String lastName, byte[] profilePicture, String shortBio, String longBio, float yearsOfExperience, Links links) {
+    public Advocate(String firstName, String lastName, byte[] profilePicture, String shortBio, String longBio, int yearsOfExperience, Links links) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePicture = profilePicture;
@@ -43,7 +45,7 @@ public class Advocate {
     }
 
     public Advocate() {}
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
@@ -92,11 +94,11 @@ public class Advocate {
         this.longBio = longBio;
     }
 
-    public float getYearsOfExperience() {
+    public int getYearsOfExperience() {
         return yearsOfExperience;
     }
 
-    public void setYearsOfExperience(float yearsOfExperience) {
+    public void setYearsOfExperience(int yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
     }
 

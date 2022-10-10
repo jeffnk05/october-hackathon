@@ -5,5 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ComapnyRepository extends CrudRepository<Company, Long> {
+public interface CompanyRepository extends CrudRepository<Company, Long> {
+
+    public Company findById(long id);
 }
