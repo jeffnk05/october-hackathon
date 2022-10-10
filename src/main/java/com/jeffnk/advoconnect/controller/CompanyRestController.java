@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/company")
 public class CompanyRestController {
@@ -20,6 +22,11 @@ public class CompanyRestController {
     @GetMapping("/{id}")
     public Company getCompanyDetails(@PathVariable long id) {
         return companyService.findByCompanyId(id);
+    }
+
+    @GetMapping
+    public List<Company> getCompanies() {
+        return companyService.findAllCompanies();
     }
 
 }
