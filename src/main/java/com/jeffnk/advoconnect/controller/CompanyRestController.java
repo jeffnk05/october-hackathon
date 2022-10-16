@@ -1,7 +1,7 @@
 package com.jeffnk.advoconnect.controller;
 
 import com.jeffnk.advoconnect.model.Company;
-import com.jeffnk.advoconnect.service.CompanyService;
+import com.jeffnk.advoconnect.repository.CompanyRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,20 +13,21 @@ import java.util.List;
 @RequestMapping("/company")
 public class CompanyRestController {
 
-    private final CompanyService companyService;
+    private final CompanyRepository companyRepository;
 
-    public CompanyRestController(CompanyService companyService) {
-        this.companyService = companyService;
+    public CompanyRestController(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
     }
+
 
     @GetMapping("/{id}")
     public Company getCompanyDetails(@PathVariable long id) {
-        return companyService.findByCompanyId(id);
+        return companyRepository.findById(id);
     }
 
     @GetMapping
     public List<Company> getCompanies() {
-        return companyService.findAllCompanies();
+        return companyRepository.findAll();
     }
 
 }
