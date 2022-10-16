@@ -26,6 +26,18 @@ public class CompanyRestController {
         return companyRepository.findAll();
     }
 
+    @PutMapping("/{id}")
+    public Company updateCompany(@RequestBody Company newCompany, @PathVariable Long id) {
+        return companyRepository.findById(id)
+                .map(company -> {
+                    company.setName(newCompany.getName());
+                    company.setLogo(newCompany.getLogo());
+                    company.setSummary(newCompany.getSummary());
+                    return companyRepository.save(company);
+                })
+                .orElseGet(() -> companyRepository.save(newCompany));
+    }
+
     @DeleteMapping("/{id}")
     public void deleteCompany(@PathVariable Long id) {
         companyRepository.deleteById(id);
