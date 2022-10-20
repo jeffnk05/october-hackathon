@@ -1,12 +1,15 @@
 package com.jeffnk.advoconnect.controller;
 
+import com.jeffnk.advoconnect.CompanyModelAssembler;
 import com.jeffnk.advoconnect.model.Company;
 import com.jeffnk.advoconnect.repository.CompanyRepository;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/company")
@@ -14,8 +17,10 @@ public class CompanyRestController {
 
     private final CompanyRepository companyRepository;
 
-    public CompanyRestController(CompanyRepository companyRepository) {
+    private final CompanyModelAssembler assembler;
+    public CompanyRestController(CompanyRepository companyRepository, CompanyModelAssembler assembler) {
         this.companyRepository = companyRepository;
+        this.assembler = assembler;
     }
 
     @GetMapping("/{id}")
@@ -23,14 +28,17 @@ public class CompanyRestController {
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Company doesn't exist"));
 
-        return EntityModel.of(company,
-                linkTo(methodOn(CompanyRestController.class).getCompanyDetails(id)).withSelfRel(),
-                linkTo(methodOn(CompanyRestController.class).getCompanies()).withRel("companies"));
+        return assembler.toModel(company);
     }
 
     @GetMapping
-    public List<Company> getCompanies() {
-        return companyRepository.findAll();
+    public CollectionModel<EntityModel<Company>> getCompanies() {
+        List<EntityModel<Company>> companies = companyRepository.findAll().stream()
+                .map(assembler::toModel)
+                .collect(Collectors.toList());
+
+        return CollectionModel.of(companies,
+                linkTo(methodOn(CompanyRestController.class).getCompanies()).withSelfRel());
     }
 
     @PutMapping("/{id}")
